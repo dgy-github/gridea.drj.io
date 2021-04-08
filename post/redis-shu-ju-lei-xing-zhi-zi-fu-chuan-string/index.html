@@ -1,0 +1,367 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>redis 数据类型之字符串 String | Gridea</title>
+<link rel="shortcut icon" href="https://gridea.drj.io/favicon.ico?v=1617864668132">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://gridea.drj.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="redis 数据类型之字符串 String | Gridea - Atom Feed" href="https://gridea.drj.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="###命令行模式
+进入命令行模式：
+redis_cli -a password  --raw
+--raw 防止乱码
+
+help
+使用下面命令查看手册：
+help @string
+###exists
+查看key是否存在，返回true / fa..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://gridea.drj.io">
+  <img class="avatar" src="https://gridea.drj.io/images/avatar.png?v=1617864668132" alt="">
+  </a>
+  <h1 class="site-title">
+    Gridea
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              redis 数据类型之字符串 String
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-04-01
+              </span>
+              <span>
+                7 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>###命令行模式<br>
+进入命令行模式：</p>
+<pre><code>redis_cli -a password  --raw
+--raw 防止乱码
+</code></pre>
+<h3 id="help">help</h3>
+<p>使用下面命令查看手册：<br>
+help @string</p>
+<p>###exists</p>
+<p>查看key是否存在，返回true / false, 1/0</p>
+<p>exists key</p>
+<p>###增加<br>
+set</p>
+<p>set,setex,psetex,setnx</p>
+<pre><code>#ex为多少秒过期 px为多少毫秒过期，nx为若不存在才创建，xx为若存在才覆盖创建
+set key value [ex seconds] [px milliseconds] [nx|xx]
+</code></pre>
+<p>使用set命令新增一个键值对，EX,PX用法：</p>
+<pre><code>127.0.0.1:6379&gt; set name 王义凯
+OK
+127.0.0.1:6379&gt; get name
+&quot;\xe7\x8e\x8b\xe4\xb9\x89\xe5\x87\xaf&quot;   
+127.0.0.1:6379&gt; set name wang,yikai
+OK
+127.0.0.1:6379&gt; get name
+&quot;wang,yikai&quot;
+127.0.0.1:6379&gt; set name_ex wyk ex 10
+OK
+127.0.0.1:6379&gt; ttl name_ex
+(integer) 2
+127.0.0.1:6379&gt; ttl name_ex
+(integer) -2
+127.0.0.1:6379&gt; get name_ex
+(nil)
+127.0.0.1:6379&gt; set name_px wyk px 10000
+OK
+127.0.0.1:6379&gt; ttl name_px
+(integer) 4
+127.0.0.1:6379&gt; ttl name_px
+(integer) 0
+127.0.0.1:6379&gt; get name_px
+(nil)
+127.0.0.1:6379&gt; setex name_ex 10 wyk
+OK
+127.0.0.1:6379&gt; ttl name_ex
+(integer) 3
+127.0.0.1:6379&gt; ttl name_ex
+(integer) 0
+127.0.0.1:6379&gt; get name_ex
+(nil)
+127.0.0.1:6379&gt; psetex name_px 10000 wyk
+OK
+127.0.0.1:6379&gt; ttl name_px
+(integer) 3
+127.0.0.1:6379&gt; ttl name_px
+(integer) -2
+127.0.0.1:6379&gt; get name_px
+(nil)
+</code></pre>
+<p>SET中 NX,XX用法：</p>
+<pre><code>127.0.0.1:6379&gt; set name_csdn wyk
+OK
+127.0.0.1:6379&gt; get name_csdn
+&quot;wyk&quot;
+127.0.0.1:6379&gt; set name_csdn wyk2
+OK
+127.0.0.1:6379&gt; get name_csdn
+&quot;wyk2&quot;
+127.0.0.1:6379&gt; set name_nx wyk nx
+OK
+127.0.0.1:6379&gt; get name_nx
+&quot;wyk&quot;
+127.0.0.1:6379&gt; set name_nx wyk2 nx
+(nil)
+127.0.0.1:6379&gt; get name_nx
+&quot;wyk&quot;
+127.0.0.1:6379&gt; setnx name_nx wyk2
+(integer) 0
+127.0.0.1:6379&gt; get name_nx
+&quot;wyk&quot;
+127.0.0.1:6379&gt; set name_xx wyk xx
+(nil)
+127.0.0.1:6379&gt; get name_xx
+(nil)
+127.0.0.1:6379&gt; set name_xx wyk
+OK
+127.0.0.1:6379&gt; get name_xx
+&quot;wyk&quot;
+127.0.0.1:6379&gt; set name_xx wyk2 xx
+OK
+127.0.0.1:6379&gt; get name_xx
+&quot;wyk2&quot;
+</code></pre>
+<p>mset</p>
+<p>mset,msetnx</p>
+<p>同时定义多个键值对,mset也可以和nx一起用：</p>
+<pre><code>mset key1 value1 [key2 value2...] #批量创建kv，已存在的会被更新
+msetnx key1 value1 [key2 value2...] #批量创建kv，所有key不存在才会创建
+
+127.0.0.1:6379&gt; mset k1 a k2 b k3 c
+OK
+127.0.0.1:6379&gt; mget k1 k2 k3
+1) &quot;a&quot;
+2) &quot;b&quot;
+3) &quot;c&quot;
+</code></pre>
+<p>删<br>
+del</p>
+<p>使用del命令删除数据，可批量可单个删除：</p>
+<p>del key1 [key2 key3...]</p>
+<pre><code>127.0.0.1:6379&gt; del k1 k2 k3
+(integer) 3
+127.0.0.1:6379&gt; del name_xx
+(integer) 1
+127.0.0.1:6379&gt; mget k1 k2 k3 name_xx name_nx
+1) (nil)
+2) (nil)
+3) (nil)
+4) (nil)
+5) &quot;wyk&quot;
+</code></pre>
+<p>改<br>
+set</p>
+<p>上面set中介绍了，如果对同一个key进行set即可更新该数据：</p>
+<pre><code>127.0.0.1:6379&gt; set email wyk@csdn.com
+OK
+127.0.0.1:6379&gt; get email
+&quot;wyk@csdn.com&quot;
+127.0.0.1:6379&gt; set email rick@csdn.com
+OK
+127.0.0.1:6379&gt; get email
+&quot;rick@csdn.com&quot;
+</code></pre>
+<p>getset</p>
+<p>等同于get+set，执行此命令返回get的结果，然后将该key更新为新的value，下次再get的时候查到的就是新的value：</p>
+<pre><code>getset key new_value
+&gt;&gt;old_value
+get key
+&gt;&gt;new_value
+</code></pre>
+<p>setrange</p>
+<p>对指定下标的字符串进行更新，下标从0开始算起：</p>
+<p>setrange key offeset value</p>
+<p>查<br>
+keys</p>
+<p>查看所有的key</p>
+<p>keys *</p>
+<p>get</p>
+<p>使用get获得指定key的value</p>
+<p>get key</p>
+<p>mget</p>
+<p>使用mget批量获得指定keys的values</p>
+<p>mget key1 [key2 key3...]</p>
+<p>getrange</p>
+<p>从字符串的指定开始结束下标截取字符串返回，下标从0开始算起：</p>
+<p>getrange key start end</p>
+<p>计数<br>
+incr</p>
+<p>对指定的key的value加1，递增步长默认1，如果key不存在，其初始值为0，在incr之后其值为1，如果value的值不能转为整型，如hello，该操作将执行失败并返回相应的错误信息：</p>
+<p>incr key</p>
+<p>decr</p>
+<p>对指定的key的value减1，递减步长默认1，如果key不存在，其初始值为0，在decr之后其值为-1，如果value的值不能转为整型，如hello，该操作将执行失败并返回相应的错误信息：</p>
+<p>decr key</p>
+<p>incrby</p>
+<p>对指定的key的value加指定的步长，递增步长可指定，如果key不存在，其初始值为0，在incrby之后其值为步长，如果value的值不能转为整型，如hello，该操作将执行失败并返回相应的错误信息：</p>
+<pre><code>#步长increment为整数，当为负数时效果等于递减
+incrby key increment
+</code></pre>
+<p>decrby</p>
+<p>对指定的key的value减指定的步长，递减步长可指定，如果key不存在，其初始值为0，在decrby之后其值为步长的负数，如果value的值不能转为整型，如hello，该操作将执行失败并返回相应的错误信息：</p>
+<pre><code>#步长increment为整数，当为负数时效果等于递増
+decrby key increment
+</code></pre>
+<p>incrbyfloat<br>
+效果与incrby类似，此方法支持传浮点型的值，正数为增，负数为减</p>
+<p>追加<br>
+append</p>
+<p>在字符串最后面追加子串：</p>
+<p>append key value</p>
+<p>长度<br>
+strlen</p>
+<p>返回字符串的长度：</p>
+<p>strlen key</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#help">help</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://gridea.drj.io/post/redis-606-an-zhuang/">
+              <h3 class="post-title">
+                redis 6.0.6 安装
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://gridea.drj.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

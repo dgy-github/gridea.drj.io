@@ -1,0 +1,255 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>redis 数据类型  zset | Gridea</title>
+<link rel="shortcut icon" href="https://gridea.drj.io/favicon.ico?v=1617864668132">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://gridea.drj.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="redis 数据类型  zset | Gridea - Atom Feed" href="https://gridea.drj.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="
+增加
+zadd 往有序集合中新增成员，需要指定该成员的分数，分数可以是整形或浮点型，当分数相同时候，索引下标按照字典排序：
+zadd key [NX|XX] [CH] [INCR] score member [score member ...." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://gridea.drj.io">
+  <img class="avatar" src="https://gridea.drj.io/images/avatar.png?v=1617864668132" alt="">
+  </a>
+  <h1 class="site-title">
+    Gridea
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              redis 数据类型  zset
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-04-07
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h3 id=""></h3>
+<p>增加<br>
+zadd 往有序集合中新增成员，需要指定该成员的分数，分数可以是整形或浮点型，当分数相同时候，索引下标按照字典排序：</p>
+<pre><code>zadd key [NX|XX] [CH] [INCR] score member [score member ...]
+ zadd myzset 0 a 1 b 
+</code></pre>
+<h3 id="-2"></h3>
+<p>查找集合成员数<br>
+zcard 获取有序集合的成员数：</p>
+<pre><code>zcard key
+</code></pre>
+<h3 id="-3"></h3>
+<p>获取指定分数区间的成员数<br>
+zcount<br>
+从有序集合内获取指定分数区间内的成员数:</p>
+<pre><code>zcount key min max
+</code></pre>
+<h3 id="-4"></h3>
+<p>根据字典排序返回min ,max之间的数据量<br>
+zlexcount</p>
+<pre><code>zlexcount key min max
+1.根据字典数据范围返回区间内的集合元素
+zlexcount myzset [xxx [zzz
+2.根据下标 返回元素 
+zlexcount myzset - +
+</code></pre>
+<h3 id="-5"></h3>
+<p>zrange<br>
+根据下标查看集合内所有成员（及分数），[start,stop]</p>
+<pre><code>zrange key start stop [withscores]
+</code></pre>
+<h3 id="-6"></h3>
+<p>zrangebylex<br>
+根据字典区间返回有序集合的成员<br>
+min:字典中排序位置较小的成员,必须以&quot;[&quot; 或者以&quot;(&quot;开头,可使用&quot;-&quot;代替， &quot;[&quot;代表闭区间，&quot;(&quot;代表开区间。<br>
+max:字典中排序位置较大的成员,必须以&quot;[&quot; 或者以&quot;(&quot;开头,可使用&quot;+&quot;代替， &quot;[&quot;代表闭区间，&quot;(&quot;代表开区间。<br>
+不要在分数不一致的SortSet集合中去使用 ZRANGEBYLEX 指令,因为获取的结果并不准确。<br>
+limit offset count: 分片查询，limit为关键字，offset表示从结果集的哪个下标开始分片，count表示分片的数据量。</p>
+<pre><code>zrangebylex key min max [LIMIT offset count]
+</code></pre>
+<h3 id="-7"></h3>
+<p>zscore 返回有序集合，成员的分数值，不存在的成员返回空：</p>
+<pre><code>zscore key member
+</code></pre>
+<h3 id="-8"></h3>
+<p>zscan用于迭代有序集合中的元素（包括元素成员和元素分值）并将匹配到的值返回</p>
+<pre><code>zscan key cursor [MATCH pattern] [COUNT count]
+zscan myzsetZ 0 match *
+</code></pre>
+<h3 id="-9"></h3>
+<p>zrangebyscore 根据分值查询，min ,max 区间元素，withscores 显示分值 ,limit 页数 count 展示数量，分页显示</p>
+<pre><code>zrangebyscore key min max [withscores] [limit offset count]
+</code></pre>
+<h3 id="-10"></h3>
+<p>zrank 返回有序集合中指定成员的索引（下标）</p>
+<pre><code>zrank key member
+</code></pre>
+<h3 id="-11"></h3>
+<p>zrevrange 将集合反序[reverse] 之后执行zrange 返回：</p>
+<pre><code>zrevrange key start stop [withscores]
+</code></pre>
+<h3 id="-12"></h3>
+<p>zrevrangebylex</p>
+<p>结合zrangebylex和zrevrange功能。反序通过字典区间返回有序集合的成员：</p>
+<pre><code>zrevrangebylex key max min [limit offset count]
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://gridea.drj.io/post/redis-shu-ju-jie-gou-set/">
+              <h3 class="post-title">
+                redis 数据结构 set
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://gridea.drj.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

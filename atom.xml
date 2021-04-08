@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://gridea.drj.io</id>
+    <title>Gridea</title>
+    <updated>2021-04-08T06:51:10.690Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://gridea.drj.io"/>
+    <link rel="self" href="https://gridea.drj.io/atom.xml"/>
+    <subtitle>温故而知新</subtitle>
+    <logo>https://gridea.drj.io/images/avatar.png</logo>
+    <icon>https://gridea.drj.io/favicon.ico</icon>
+    <rights>All rights reserved 2021, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[redis 数据类型  zset]]></title>
+        <id>https://gridea.drj.io/post/redis-shu-ju-lei-xing-zset/</id>
+        <link href="https://gridea.drj.io/post/redis-shu-ju-lei-xing-zset/">
+        </link>
+        <updated>2021-04-07T07:27:03.000Z</updated>
+        <content type="html"><![CDATA[<h3 id=""></h3>
+<p>增加<br>
+zadd 往有序集合中新增成员，需要指定该成员的分数，分数可以是整形或浮点型，当分数相同时候，索引下标按照字典排序：</p>
+<pre><code>zadd key [NX|XX] [CH] [INCR] score member [score member ...]
+ zadd myzset 0 a 1 b 
+</code></pre>
+<h3 id="-2"></h3>
+<p>查找集合成员数<br>
+zcard 获取有序集合的成员数：</p>
+<pre><code>zcard key
+</code></pre>
+<h3 id="-3"></h3>
+<p>获取指定分数区间的成员数<br>
+zcount<br>
+从有序集合内获取指定分数区间内的成员数:</p>
+<pre><code>zcount key min max
+</code></pre>
+<h3 id="-4"></h3>
+<p>根据字典排序返回min ,max之间的数据量<br>
+zlexcount</p>
+<pre><code>zlexcount key min max
+1.根据字典数据范围返回区间内的集合元素
+zlexcount myzset [xxx [zzz
+2.根据下标 返回元素 
+zlexcount myzset - +
+</code></pre>
+<h3 id="-5"></h3>
+<p>zrange<br>
+根据下标查看集合内所有成员（及分数），[start,stop]</p>
+<pre><code>zrange key start stop [withscores]
+</code></pre>
+<h3 id="-6"></h3>
+<p>zrangebylex<br>
+根据字典区间返回有序集合的成员<br>
+min:字典中排序位置较小的成员,必须以&quot;[&quot; 或者以&quot;(&quot;开头,可使用&quot;-&quot;代替， &quot;[&quot;代表闭区间，&quot;(&quot;代表开区间。<br>
+max:字典中排序位置较大的成员,必须以&quot;[&quot; 或者以&quot;(&quot;开头,可使用&quot;+&quot;代替， &quot;[&quot;代表闭区间，&quot;(&quot;代表开区间。<br>
+不要在分数不一致的SortSet集合中去使用 ZRANGEBYLEX 指令,因为获取的结果并不准确。<br>
+limit offset count: 分片查询，limit为关键字，offset表示从结果集的哪个下标开始分片，count表示分片的数据量。</p>
+<pre><code>zrangebylex key min max [LIMIT offset count]
+</code></pre>
+<h3 id="-7"></h3>
+<p>zscore 返回有序集合，成员的分数值，不存在的成员返回空：</p>
+<pre><code>zscore key member
+</code></pre>
+<h3 id="-8"></h3>
+<p>zscan用于迭代有序集合中的元素（包括元素成员和元素分值）并将匹配到的值返回</p>
+<pre><code>zscan key cursor [MATCH pattern] [COUNT count]
+zscan myzsetZ 0 match *
+</code></pre>
+<h3 id="-9"></h3>
+<p>zrangebyscore 根据分值查询，min ,max 区间元素，withscores 显示分值 ,limit 页数 count 展示数量，分页显示</p>
+<pre><code>zrangebyscore key min max [withscores] [limit offset count]
+</code></pre>
+<h3 id="-10"></h3>
+<p>zrank 返回有序集合中指定成员的索引（下标）</p>
+<pre><code>zrank key member
+</code></pre>
+<h3 id="-11"></h3>
+<p>zrevrange 将集合反序[reverse] 之后执行zrange 返回：</p>
+<pre><code>zrevrange key start stop [withscores]
+</code></pre>
+<h3 id="-12"></h3>
+<p>zrevrangebylex</p>
+<p>结合zrangebylex和zrevrange功能。反序通过字典区间返回有序集合的成员：</p>
+<pre><code>zrevrangebylex key max min [limit offset count]
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[redis 数据结构 set]]></title>
+        <id>https://gridea.drj.io/post/redis-shu-ju-jie-gou-set/</id>
+        <link href="https://gridea.drj.io/post/redis-shu-ju-jie-gou-set/">
+        </link>
+        <updated>2021-04-07T01:41:36.000Z</updated>
+        <content type="html"><![CDATA[<p>增加元素<br>
+可以增加若干个元素的set 集合</p>
+<pre><code> SADD key member [member ...]
+  summary: Add one or more members to a set
+  since: 1.0.0
+</code></pre>
+<p>获取集合中元素的数量</p>
+<pre><code>  SCARD key
+  summary: Get the number of members in a set
+  since: 1.0.0
+</code></pre>
+<p>获取差集<br>
+对比多个集合的差集，返回左侧集合中，其他集合中没有的元素 有点像是<br>
+(A-A∩B...C) 取集合A中和其他集合相交部分的元素后的差集</p>
+<pre><code>sdiff key [key ...]
+summary: Subtract multiple sets
+since: 1.0.0
+</code></pre>
+<p>获取差集，并且保存到一个新的集合中（主要还是A集合为主）</p>
+<pre><code>  sdiffstore destination key [key ...]
+  summary: Subtract multiple sets and store the resulting set in a key
+  since: 1.0.0
+</code></pre>
+<p>获取多个集合交集部分的元素</p>
+<pre><code>sinter key [key ...]
+summary: Intersect multiple sets
+since: 1.0.0
+</code></pre>
+<p>获取多个集合交易部分的元素并且保存到一个新的集合中</p>
+<pre><code>sinterstore destination key [key ...]
+summary: Intersect multiple sets and store the resulting set in a key
+since: 1.0.0
+</code></pre>
+<p>查看集合中是否包含该元素</p>
+<pre><code>  SISMEMBER key member
+  summary: Determine if a given value is a member of a set
+  since: 1.0.0
+</code></pre>
+<p>查看集合中元素</p>
+<pre><code> smembers key
+ summary: Get all the members in a set
+ since: 1.0.0
+</code></pre>
+<p>将元素从原来的集合中转移到 目标集合中</p>
+<pre><code>  smove source destination member
+  summary: Move a member from one set to another
+  since: 1.0.0
+</code></pre>
+<p>随机弹出 count 个元素</p>
+<pre><code>spop key [count]
+summary: Remove and return one or multiple random members from a set
+since: 1.0.0
+</code></pre>
+<p>随机获取 count 数量个元素</p>
+<pre><code>srandmenber key [count]
+summary: Get one or multiple random members from a set
+since: 1.0.0
+</code></pre>
+<p>从集合中删除 一个或者多个指定元素</p>
+<pre><code>  srem key member [member ...]
+  summary: Remove one or more members from a set
+  since: 1.0.0
+</code></pre>
+<p>sscan 返回匹配 pattern 的 count 数量的元素</p>
+<p>只有两种游标是合法的：</p>
+<pre><code>在开始一个新的迭代时， 游标必须为 0 。
+增量式迭代命令在执行之后返回的， 用于延续（continue）迭代过程的游标。
+</code></pre>
+<pre><code> sscan key cursor [MATCH pattern] [COUNT count]
+ summary: Incrementally iterate Set elements
+ since: 2.8.0
+ sscan myset0 0 match  n*
+</code></pre>
+<p>取多个集合的并集，重复的会被去重</p>
+<pre><code>  sunion key [key ...]
+  summary: Add multiple sets
+  since: 1.0.0
+</code></pre>
+<p>取多个集合的并集，去重后，保存为一个新的集合</p>
+<pre><code>  sunionstore destination key [key ...]
+  summary: Add multiple sets and store the resulting set in a key
+  since: 1.0.0
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[redis 数据结构 list  ]]></title>
+        <id>https://gridea.drj.io/post/redis-shu-ju-jie-gou-list/</id>
+        <link href="https://gridea.drj.io/post/redis-shu-ju-jie-gou-list/">
+        </link>
+        <updated>2021-04-06T07:04:49.000Z</updated>
+        <content type="html"><![CDATA[<p>###help 查看相关命令手册</p>
+<pre><code>help @list
+</code></pre>
+<p>查看元素</p>
+<pre><code> lrange key start stop
+</code></pre>
+<p>增加<br>
+lpush 从左边插入元素，从左边一次追加入栈，先进后出，后进先出</p>
+<pre><code>lpush key element [element ...]
+</code></pre>
+<p>rpush<br>
+从右边插入元素，从右边开始追加到列表中，先进先出 ，后进后出</p>
+<pre><code>rpush key element [element ...]
+</code></pre>
+<p>lpushx<br>
+与 string 类型中的nx 类似，只有当list 存在时候才会从左边开始追加元素入栈：</p>
+<pre><code>lpushx key element [element ...]
+</code></pre>
+<p>rpushx<br>
+与string 类型中的nx 类似，只有当list 存在时候才会从右边开始追加元素入栈：</p>
+<pre><code>rpushx key element [element ...]
+</code></pre>
+<p>linsert<br>
+从 list 中指定的元素 前/后插入一个新元素:</p>
+<pre><code>linsert key before|after pivot element
+</code></pre>
+<p>删<br>
+lrem<br>
+从列表左侧开始移除count 个 指定的元素 ，返回删除的元素个数</p>
+<pre><code>lrem key count element
+</code></pre>
+<p>改<br>
+lset<br>
+根据下标修改元素内容，下标是从 左边算起，以 0 开始：</p>
+<pre><code>lset  key index element
+</code></pre>
+<p>截取<br>
+ltrim<br>
+将原来列表截取为从下标 start 到下标 stop 闭区间的列表，即原有列表变为一个从第 start+1 到 第stop+1 个元素的列表：</p>
+<pre><code>ltrim key start stop
+</code></pre>
+<p>查<br>
+llen<br>
+查看列表中元素的个数</p>
+<pre><code>llen key
+</code></pre>
+<p>lrange</p>
+<p>根据起止下标查询列表元素，负数表示从后往前，跟python里一样：</p>
+<pre><code>    lrange key start stop
+     
+    lrange key 0 -1 #表示查看全部元素
+    lrange key -1 -1 #表示查看最右边的元素
+</code></pre>
+<p>lindex</p>
+<p>根据指定的index下标查看列表中的元素，下标从0开始：</p>
+<pre><code>lindex key index
+</code></pre>
+<p>lpop</p>
+<p>从左边消费列表中的元素，消费完之后从列表中删除：</p>
+<pre><code>lpop key
+</code></pre>
+<p>rpop</p>
+<p>从右边消费列表中的元素，消费完之后从列表中删除：</p>
+<pre><code>rpop key
+</code></pre>
+<p>rpoplpush</p>
+<p>消费列表A的最右边的元素返回，然后追加到列表B的最左边：</p>
+<pre><code>    rpoplpush source destination
+    rpoplpush List_A List_B
+</code></pre>
+<p>blpop</p>
+<p>从列表中左侧查询元素，返回列表的key和左侧第一个元素，若所有查询的列表中都没有元素，则会阻塞等待至设置的timeout秒之后返回空，若在这期间，这些列表新增了元素，则会立刻消费并返回该元素：</p>
+<pre><code>blpop key [key ...] timeout
+</code></pre>
+<p>brpop</p>
+<p>与blpop类似，区别是brpop从右侧消费：</p>
+<pre><code>brpop key [key ...] timeout
+</code></pre>
+<p>brpoplpush</p>
+<p>结合brpop和lpush，阻塞消费并将消费到的元素添加至target列表的最左侧：</p>
+<pre><code>brpoplpush source destination timeout
+</code></pre>
+<p>应用<br>
+栈：先进后出</p>
+<p>lpush + lpop<br>
+lpush 将新进的元素放到列表左侧，lpop 从左侧第一个元素出栈</p>
+<p>队列：先进先出<br>
+lpush + rpop<br>
+将新进的元素放到左侧，然后从右侧出栈之前的元素</p>
+<p>有限集合<br>
+lpush + ltrim<br>
+将新进的元素往左侧追加，截取固定下标的元素，重新生成新的列表</p>
+<p>消息队列<br>
+lpush + brpop<br>
+新元素追加到左侧，查看超时时间，从右侧出栈</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[redis 数据类型之字符串 String]]></title>
+        <id>https://gridea.drj.io/post/redis-shu-ju-lei-xing-zhi-zi-fu-chuan-string/</id>
+        <link href="https://gridea.drj.io/post/redis-shu-ju-lei-xing-zhi-zi-fu-chuan-string/">
+        </link>
+        <updated>2021-04-01T05:58:58.000Z</updated>
+        <content type="html"><![CDATA[<p>###命令行模式<br>
+进入命令行模式：</p>
+<pre><code>redis_cli -a password  --raw
+--raw 防止乱码
+</code></pre>
+<h3 id="help">help</h3>
+<p>使用下面命令查看手册：<br>
+help @string</p>
+<p>###exists</p>
+<p>查看key是否存在，返回true / false, 1/0</p>
+<p>exists key</p>
+<p>###增加<br>
+set</p>
+<p>set,setex,psetex,setnx</p>
+<pre><code>#ex为多少秒过期 px为多少毫秒过期，nx为若不存在才创建，xx为若存在才覆盖创建
+set key value [ex seconds] [px milliseconds] [nx|xx]
+</code></pre>
+<p>使用set命令新增一个键值对，EX,PX用法：</p>
+<pre><code>127.0.0.1:6379&gt; set name 王义凯
+OK
+127.0.0.1:6379&gt; get name
+&quot;\xe7\x8e\x8b\xe4\xb9\x89\xe5\x87\xaf&quot;   
+127.0.0.1:6379&gt; set name wang,yikai
+OK
+127.0.0.1:6379&gt; get name
+&quot;wang,yikai&quot;
+127.0.0.1:6379&gt; set name_ex wyk ex 10
+OK
+127.0.0.1:6379&gt; ttl name_ex
+(integer) 2
+127.0.0.1:6379&gt; ttl name_ex
+(integer) -2
+127.0.0.1:6379&gt; get name_ex
+(nil)
+127.0.0.1:6379&gt; set name_px wyk px 10000
+OK
+127.0.0.1:6379&gt; ttl name_px
+(integer) 4
+127.0.0.1:6379&gt; ttl name_px
+(integer) 0
+127.0.0.1:6379&gt; get name_px
+(nil)
+127.0.0.1:6379&gt; setex name_ex 10 wyk
+OK
+127.0.0.1:6379&gt; ttl name_ex
+(integer) 3
+127.0.0.1:6379&gt; ttl name_ex
+(integer) 0
+127.0.0.1:6379&gt; get name_ex
+(nil)
+127.0.0.1:6379&gt; psetex name_px 10000 wyk
+OK
+127.0.0.1:6379&gt; ttl name_px
+(integer) 3
+127.0.0.1:6379&gt; ttl name_px
+(integer) -2
+127.0.0.1:6379&gt; get name_px
+(nil)
+</code></pre>
+<p>SET中 NX,XX用法：</p>
+<pre><code>127.0.0.1:6379&gt; set name_csdn wyk
+OK
+127.0.0.1:6379&gt; get name_csdn
+&quot;wyk&quot;
+127.0.0.1:6379&gt; set name_csdn wyk2
+OK
+127.0.0.1:6379&gt; get name_csdn
+&quot;wyk2&quot;
+127.0.0.1:6379&gt; set name_nx wyk nx
+OK
+127.0.0.1:6379&gt; get name_nx
+&quot;wyk&quot;
+127.0.0.1:6379&gt; set name_nx wyk2 nx
+(nil)
+127.0.0.1:6379&gt; get name_nx
+&quot;wyk&quot;
+127.0.0.1:6379&gt; setnx name_nx wyk2
+(integer) 0
+127.0.0.1:6379&gt; get name_nx
+&quot;wyk&quot;
+127.0.0.1:6379&gt; set name_xx wyk xx
+(nil)
+127.0.0.1:6379&gt; get name_xx
+(nil)
+127.0.0.1:6379&gt; set name_xx wyk
+OK
+127.0.0.1:6379&gt; get name_xx
+&quot;wyk&quot;
+127.0.0.1:6379&gt; set name_xx wyk2 xx
+OK
+127.0.0.1:6379&gt; get name_xx
+&quot;wyk2&quot;
+</code></pre>
+<p>mset</p>
+<p>mset,msetnx</p>
+<p>同时定义多个键值对,mset也可以和nx一起用：</p>
+<pre><code>mset key1 value1 [key2 value2...] #批量创建kv，已存在的会被更新
+msetnx key1 value1 [key2 value2...] #批量创建kv，所有key不存在才会创建
+
+127.0.0.1:6379&gt; mset k1 a k2 b k3 c
+OK
+127.0.0.1:6379&gt; mget k1 k2 k3
+1) &quot;a&quot;
+2) &quot;b&quot;
+3) &quot;c&quot;
+</code></pre>
+<p>删<br>
+del</p>
+<p>使用del命令删除数据，可批量可单个删除：</p>
+<p>del key1 [key2 key3...]</p>
+<pre><code>127.0.0.1:6379&gt; del k1 k2 k3
+(integer) 3
+127.0.0.1:6379&gt; del name_xx
+(integer) 1
+127.0.0.1:6379&gt; mget k1 k2 k3 name_xx name_nx
+1) (nil)
+2) (nil)
+3) (nil)
+4) (nil)
+5) &quot;wyk&quot;
+</code></pre>
+<p>改<br>
+set</p>
+<p>上面set中介绍了，如果对同一个key进行set即可更新该数据：</p>
+<pre><code>127.0.0.1:6379&gt; set email wyk@csdn.com
+OK
+127.0.0.1:6379&gt; get email
+&quot;wyk@csdn.com&quot;
+127.0.0.1:6379&gt; set email rick@csdn.com
+OK
+127.0.0.1:6379&gt; get email
+&quot;rick@csdn.com&quot;
+</code></pre>
+<p>getset</p>
+<p>等同于get+set，执行此命令返回get的结果，然后将该key更新为新的value，下次再get的时候查到的就是新的value：</p>
+<pre><code>getset key new_value
+&gt;&gt;old_value
+get key
+&gt;&gt;new_value
+</code></pre>
+<p>setrange</p>
+<p>对指定下标的字符串进行更新，下标从0开始算起：</p>
+<p>setrange key offeset value</p>
+<p>查<br>
+keys</p>
+<p>查看所有的key</p>
+<p>keys *</p>
+<p>get</p>
+<p>使用get获得指定key的value</p>
+<p>get key</p>
+<p>mget</p>
+<p>使用mget批量获得指定keys的values</p>
+<p>mget key1 [key2 key3...]</p>
+<p>getrange</p>
+<p>从字符串的指定开始结束下标截取字符串返回，下标从0开始算起：</p>
+<p>getrange key start end</p>
+<p>计数<br>
+incr</p>
+<p>对指定的key的value加1，递增步长默认1，如果key不存在，其初始值为0，在incr之后其值为1，如果value的值不能转为整型，如hello，该操作将执行失败并返回相应的错误信息：</p>
+<p>incr key</p>
+<p>decr</p>
+<p>对指定的key的value减1，递减步长默认1，如果key不存在，其初始值为0，在decr之后其值为-1，如果value的值不能转为整型，如hello，该操作将执行失败并返回相应的错误信息：</p>
+<p>decr key</p>
+<p>incrby</p>
+<p>对指定的key的value加指定的步长，递增步长可指定，如果key不存在，其初始值为0，在incrby之后其值为步长，如果value的值不能转为整型，如hello，该操作将执行失败并返回相应的错误信息：</p>
+<pre><code>#步长increment为整数，当为负数时效果等于递减
+incrby key increment
+</code></pre>
+<p>decrby</p>
+<p>对指定的key的value减指定的步长，递减步长可指定，如果key不存在，其初始值为0，在decrby之后其值为步长的负数，如果value的值不能转为整型，如hello，该操作将执行失败并返回相应的错误信息：</p>
+<pre><code>#步长increment为整数，当为负数时效果等于递増
+decrby key increment
+</code></pre>
+<p>incrbyfloat<br>
+效果与incrby类似，此方法支持传浮点型的值，正数为增，负数为减</p>
+<p>追加<br>
+append</p>
+<p>在字符串最后面追加子串：</p>
+<p>append key value</p>
+<p>长度<br>
+strlen</p>
+<p>返回字符串的长度：</p>
+<p>strlen key</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[redis 6.0.6 安装]]></title>
+        <id>https://gridea.drj.io/post/redis-606-an-zhuang/</id>
+        <link href="https://gridea.drj.io/post/redis-606-an-zhuang/">
+        </link>
+        <updated>2021-03-30T08:17:22.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="下载redis-安装包">下载redis 安装包</h3>
+<p>最好定义一个download 目录，下载时候先放入这个目录下</p>
+<pre><code>linux 命令：wget http://download.redis.io/releases/redis-6.0.6.tar.gz
+</code></pre>
+<h3 id="解压redis文件">解压redis文件</h3>
+<pre><code>解压
+tar -zxvf  redis-6.0.6.tar.gz 
+</code></pre>
+<h3 id="创建安装目录">创建安装目录</h3>
+<pre><code>cd usr/local
+mkdir redis
+</code></pre>
+<h3 id="执行安装">执行安装</h3>
+<pre><code>make MALLOC=libc
+</code></pre>
+<p>备注：可能遇到问题<br>
+make[1]: *** [server.o] Error 1<br>
+需要进行升级gcc 版本 ，查询gcc 版本  gcc -v</p>
+<pre><code>yum -y install centos-release-scl
+
+yum -y install devtoolset-9-gcc devtoolset-9-gcc-c++ devtoolset-9-binutils
+
+#这句是临时的
+scl enable devtoolset-9 bash
+
+#修改环境变量
+echo &quot;source /opt/rh/devtoolset-9/enable&quot; &gt;&gt; /etc/profile
+
+gcc -v
+</code></pre>
+<p>make test tcl 未安装：</p>
+<pre><code>#下载 tcl
+wget https://nchc.dl.sourceforge.net/project/tcl/Tcl/8.6.8/tcl8.6.8-src.tar.gz
+
+#解压
+tar xzvf tcl8.6.8-src.tar.gz 
+
+#创建文件夹
+mkdir /usr/local/tcl8.6.8
+
+#进入安装目录
+cd /usr/lcoal/tcl8.6.8
+
+#生成Makefile
+cd unix 
+./configure
+
+#编译、安装
+make  
+make install
+</code></pre>
+<p>###执行安装命令</p>
+<pre><code>make PREFIX=/usr/local/redis install
+
+执行完命令需要修改 /usr/local/redis/utils/redis_init_script 这个文件
+
+EXEC=/usr/local/redis/bin/redis-server
+CLIEXEC=/usr/local/redis/bin/redis-cli
+</code></pre>
+<p>####说明：</p>
+<pre><code>这里多了一个关键字 PREFIX=
+这个关键字的作用是编译的时候用于指定程序存放的路径。比如我们现在就是指定了redis必须存放在/usr/local/redis目录。假设不添加该关键字Linux会将可执行文件存放在/usr/local/bin目录，
+库文件会存放在/usr/local/lib目录。配置文件会存放在/usr/local/etc目录。其他的资源文件会存放在usr/local/share目录。这里指定号目录也方便后续的卸载，后续直接rm
+-rf /usr/local/redis 即可删除redis。
+
+</code></pre>
+<p>###make test 过程中出现的最严重的问题<br>
+make test of redis6.0 on centos8</p>
+<p>[exception]: Executing test client: tail: cannot open ‘+31’ for reading: No such file or directory.<br>
+tail: cannot open ‘+31’ for reading: No such file or directory<br>
+while executing</p>
+<p>这是新版本的一个bug，地址：https://github.com/redis/redis/issues/7552</p>
+<p>修复方法：</p>
+<pre><code>tests/support/util.tcl
+@@ -119,7 +119,7 @@ proc wait_for_log_message {srv_idx pattern from_line maxtries delay} {
+    set retry $maxtries
+    set stdout [srv $srv_idx stdout]
+    while {$retry} {
+ --       set result [exec tail +$from_line &lt; $stdout]
+ ++     set result [exec tail -n +$from_line &lt; $stdout]
+        set result [split $result &quot;\n&quot;]
+        foreach line $result {
+            if {[string match $pattern $line]} {
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hello Gridea]]></title>
+        <id>https://gridea.drj.io/post/hello-gridea/</id>
+        <link href="https://gridea.drj.io/post/hello-gridea/">
+        </link>
+        <updated>2018-12-11T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
+✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
+✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+<!-- more -->
+<p><a href="https://github.com/getgridea/gridea">Github</a><br>
+<a href="https://gridea.dev/">Gridea 主页</a><br>
+<a href="http://fehey.com/">示例网站</a></p>
+<h2 id="特性">特性👇</h2>
+<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
+<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
+<p>🏷️  你可以对文章进行标签分组</p>
+<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
+<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
+<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
+<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
+<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
+<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
+<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
+<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
+<p>未来，它一定会成为你离不开的伙伴</p>
+<p>尽情发挥你的才华吧！</p>
+<p>😘 Enjoy~</p>
+]]></content>
+    </entry>
+</feed>

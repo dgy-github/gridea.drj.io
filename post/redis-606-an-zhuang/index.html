@@ -1,0 +1,266 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>redis 6.0.6 安装 | Gridea</title>
+<link rel="shortcut icon" href="https://gridea.drj.io/favicon.ico?v=1617864668132">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://gridea.drj.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="redis 6.0.6 安装 | Gridea - Atom Feed" href="https://gridea.drj.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="下载redis 安装包
+最好定义一个download 目录，下载时候先放入这个目录下
+linux 命令：wget http://download.redis.io/releases/redis-6.0.6.tar.gz
+
+解压redis文件..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://gridea.drj.io">
+  <img class="avatar" src="https://gridea.drj.io/images/avatar.png?v=1617864668132" alt="">
+  </a>
+  <h1 class="site-title">
+    Gridea
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              redis 6.0.6 安装
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-03-30
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h3 id="下载redis-安装包">下载redis 安装包</h3>
+<p>最好定义一个download 目录，下载时候先放入这个目录下</p>
+<pre><code>linux 命令：wget http://download.redis.io/releases/redis-6.0.6.tar.gz
+</code></pre>
+<h3 id="解压redis文件">解压redis文件</h3>
+<pre><code>解压
+tar -zxvf  redis-6.0.6.tar.gz 
+</code></pre>
+<h3 id="创建安装目录">创建安装目录</h3>
+<pre><code>cd usr/local
+mkdir redis
+</code></pre>
+<h3 id="执行安装">执行安装</h3>
+<pre><code>make MALLOC=libc
+</code></pre>
+<p>备注：可能遇到问题<br>
+make[1]: *** [server.o] Error 1<br>
+需要进行升级gcc 版本 ，查询gcc 版本  gcc -v</p>
+<pre><code>yum -y install centos-release-scl
+
+yum -y install devtoolset-9-gcc devtoolset-9-gcc-c++ devtoolset-9-binutils
+
+#这句是临时的
+scl enable devtoolset-9 bash
+
+#修改环境变量
+echo &quot;source /opt/rh/devtoolset-9/enable&quot; &gt;&gt; /etc/profile
+
+gcc -v
+</code></pre>
+<p>make test tcl 未安装：</p>
+<pre><code>#下载 tcl
+wget https://nchc.dl.sourceforge.net/project/tcl/Tcl/8.6.8/tcl8.6.8-src.tar.gz
+
+#解压
+tar xzvf tcl8.6.8-src.tar.gz 
+
+#创建文件夹
+mkdir /usr/local/tcl8.6.8
+
+#进入安装目录
+cd /usr/lcoal/tcl8.6.8
+
+#生成Makefile
+cd unix 
+./configure
+
+#编译、安装
+make  
+make install
+</code></pre>
+<p>###执行安装命令</p>
+<pre><code>make PREFIX=/usr/local/redis install
+
+执行完命令需要修改 /usr/local/redis/utils/redis_init_script 这个文件
+
+EXEC=/usr/local/redis/bin/redis-server
+CLIEXEC=/usr/local/redis/bin/redis-cli
+</code></pre>
+<p>####说明：</p>
+<pre><code>这里多了一个关键字 PREFIX=
+这个关键字的作用是编译的时候用于指定程序存放的路径。比如我们现在就是指定了redis必须存放在/usr/local/redis目录。假设不添加该关键字Linux会将可执行文件存放在/usr/local/bin目录，
+库文件会存放在/usr/local/lib目录。配置文件会存放在/usr/local/etc目录。其他的资源文件会存放在usr/local/share目录。这里指定号目录也方便后续的卸载，后续直接rm
+-rf /usr/local/redis 即可删除redis。
+
+</code></pre>
+<p>###make test 过程中出现的最严重的问题<br>
+make test of redis6.0 on centos8</p>
+<p>[exception]: Executing test client: tail: cannot open ‘+31’ for reading: No such file or directory.<br>
+tail: cannot open ‘+31’ for reading: No such file or directory<br>
+while executing</p>
+<p>这是新版本的一个bug，地址：https://github.com/redis/redis/issues/7552</p>
+<p>修复方法：</p>
+<pre><code>tests/support/util.tcl
+@@ -119,7 +119,7 @@ proc wait_for_log_message {srv_idx pattern from_line maxtries delay} {
+    set retry $maxtries
+    set stdout [srv $srv_idx stdout]
+    while {$retry} {
+ --       set result [exec tail +$from_line &lt; $stdout]
+ ++     set result [exec tail -n +$from_line &lt; $stdout]
+        set result [split $result &quot;\n&quot;]
+        foreach line $result {
+            if {[string match $pattern $line]} {
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E4%B8%8B%E8%BD%BDredis-%E5%AE%89%E8%A3%85%E5%8C%85">下载redis 安装包</a></li>
+<li><a href="#%E8%A7%A3%E5%8E%8Bredis%E6%96%87%E4%BB%B6">解压redis文件</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95">创建安装目录</a></li>
+<li><a href="#%E6%89%A7%E8%A1%8C%E5%AE%89%E8%A3%85">执行安装</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://gridea.drj.io/post/hello-gridea/">
+              <h3 class="post-title">
+                Hello Gridea
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://gridea.drj.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
