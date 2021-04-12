@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>redis 数据类型  zset | Gridea</title>
-<link rel="shortcut icon" href="https://gridea.drj.io/favicon.ico?v=1618197904336">
+<link rel="shortcut icon" href="https://gridea.drj.io/favicon.ico?v=1618209309515">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://gridea.drj.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="redis 数据类型  zset | Gridea - Atom Feed" href="https://gridea.drj.io/atom.xml">
@@ -24,7 +24,7 @@ zadd key [NX|XX] [CH] [INCR] score member [score member ...." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://gridea.drj.io">
-  <img class="avatar" src="https://gridea.drj.io/images/avatar.png?v=1618197904336" alt="">
+  <img class="avatar" src="https://gridea.drj.io/images/avatar.png?v=1618209309515" alt="">
   </a>
   <h1 class="site-title">
     Gridea
@@ -84,7 +84,7 @@ zadd key [NX|XX] [CH] [INCR] score member [score member ...." />
                 2021-04-07
               </span>
               <span>
-                4 min read
+                8 min read
               </span>
               
             </div>
@@ -200,6 +200,162 @@ zscan myzsetZ 0 match *
 <h3 id="-20"></h3>
 <p>zremrangebylex</p>
 <p>结合zrem和zrangebylex功能：将zrangebylex匹配的结果从有序集合中删除：</p>
+<pre><code>zremrangebylex key  min max
+</code></pre>
+<pre><code>127.0.0.1:6379&gt; zremrangebylex mytestzset [china [csdn
+1
+127.0.0.1:6379&gt; zrange mytestzset 0 -1
+hz
+csdn
+drj
+op
+ik
+127.0.0.1:6379&gt; zremrangebylex mytestzset [china [csdn
+0
+127.0.0.1:6379&gt; zremrangebylex mytestzset [hz  [csdn
+0
+127.0.0.1:6379&gt; zremrangebylex mytestzset [c  [d
+0
+127.0.0.1:6379&gt; zremrangebylex mytestzset [china [csdn
+0
+127.0.0.1:6379&gt; zremrangebylex mytestzset [hz  [csdn
+0
+127.0.0.1:6379&gt; zremrangebylex mytestzset [china +
+5
+127.0.0.1:6379&gt; zrange mytestzset 0 -1
+
+127.0.0.1:6379&gt; zadd mytestzset 0 a 1 ab 2 bgh 3 cin 4 dso 5 efk 6 fhh
+7
+127.0.0.1:6379&gt; zremrangebylex mytestzset [a [dso
+5
+127.0.0.1:6379&gt; zrange mytestzset 0 -1
+efk
+fhh
+127.0.0.1:6379&gt; zremrangebylex mytestzset [e [g
+2
+127.0.0.1:6379&gt; zadd mytestzset 0 china 1 hz 2 csdn 3 drj 4 op 5 ik 6 akk 7 bhhh
+8
+127.0.0.1:6379&gt; zrange mytestzset 0 -1
+china
+hz
+csdn
+drj
+op
+ik
+akk
+bhhh
+127.0.0.1:6379&gt; zremrangebylex mytestzset [c [d
+0
+127.0.0.1:6379&gt; zremrangebylex mytestzset [c [e
+0
+127.0.0.1:6379&gt; zremrangebylex mytestzset [china [csdn
+0
+127.0.0.1:6379&gt; zremrangebylex mytestzset [china [op
+0
+127.0.0.1:6379&gt; zremrangebylex mytestzset [china +
+0
+127.0.0.1:6379&gt; zrange mytestzset 0 -1
+china
+hz
+csdn
+drj
+op
+ik
+akk
+bhhh
+127.0.0.1:6379&gt; zremrangebylex mytestzset [china +
+0
+127.0.0.1:6379&gt; zremrangebylex mytestzset -  +
+8
+127.0.0.1:6379&gt;
+由此看出如果值 按照字母顺序是乱序，按照区间范围删除，最好是 指定删除开始 [ 到 + ，或者是指定结尾 - ] 
+否则还是采用 下面这个命令
+</code></pre>
+<h3 id="-21"></h3>
+<p>zremrangebyrank<br>
+根据所选分值范围删除元素</p>
+<pre><code>zremrangebyrank key start stop
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://gridea.drj.io/post-images/1618208723644.png" alt="" loading="lazy"></figure>
+<h3 id="-22"></h3>
+<p>zremrangebyscore</p>
+<p>结合zrem和zrangebyscore功能：将zrangebyscore匹配的结果从有序集合中删除：</p>
+<pre><code>zremrangebyscore key min max
+</code></pre>
+<pre><code>127.0.0.1:6379&gt; zadd mytestzset 0 china 1 hz 2 csdn 3 drj 4 op 5 ik 6 akk 7 bhhh 7 bpon 7 basd 7 bmnas 7 bfnm
+8
+127.0.0.1:6379&gt; zrange mytestzset 0 -1 withscores
+china
+0
+hz
+1
+csdn
+2
+drj
+3
+op
+4
+ik
+5
+akk
+6
+basd
+7
+bfnm
+7
+bhhh
+7
+bmnas
+7
+bpon
+7
+127.0.0.1:6379&gt; zremrangebyrank mytestzset 0 8
+9
+127.0.0.1:6379&gt; zrange mytestzset 0 -1 withscores
+bhhh
+7
+bmnas
+7
+bpon
+7
+127.0.0.1:6379&gt; zadd mytestzset 0 china 1 hz 2 csdn 3 drj 4 op 5 ik 6 akk 7 bhhh 7 bpon 7 basd 7 bmnas 7 bfnm
+9
+127.0.0.1:6379&gt; zrange mytestzset 0 -1 withscores
+china
+0
+hz
+1
+csdn
+2
+drj
+3
+op
+4
+ik
+5
+akk
+6
+basd
+7
+bfnm
+7
+bhhh
+7
+bmnas
+7
+bpon
+7
+127.0.0.1:6379&gt; zremrangebyscore mytestzset 0 7
+12
+127.0.0.1:6379&gt; zrange mytestzset 0 -1 withscores
+根据分值删除可以将所有元素删除
+</code></pre>
+<h3 id="-23"></h3>
+<p>改<br>
+zincrby</p>
+<p>修改有序集合内成员的分数，将有序集合内成员的分数增加increment分值，increment可以为浮点型整型也可以为负数或正数：</p>
+<pre><code>zincrby key increment member 
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -208,6 +364,9 @@ zscan myzsetZ 0 match *
 <ul>
 <li>
 <ul>
+<li></li>
+<li></li>
+<li></li>
 <li></li>
 <li></li>
 <li></li>
