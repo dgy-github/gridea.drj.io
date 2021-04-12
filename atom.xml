@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://gridea.drj.io</id>
     <title>Gridea</title>
-    <updated>2021-04-12T06:45:48.236Z</updated>
+    <updated>2021-04-12T06:47:03.921Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://gridea.drj.io"/>
     <link rel="self" href="https://gridea.drj.io/atom.xml"/>
@@ -280,6 +280,106 @@ bpon
 zincrby</p>
 <p>修改有序集合内成员的分数，将有序集合内成员的分数增加increment分值，increment可以为浮点型整型也可以为负数或正数：</p>
 <pre><code>zincrby key increment member 
+</code></pre>
+<pre><code>127.0.0.1:6379&gt; zrange mytestzset 0 -1 withscores
+china
+0
+hz
+1
+csdn
+2
+drj
+3
+op
+4
+ik
+5
+akk
+6
+basd
+7
+bfnm
+7
+bhhh
+7
+bmnas
+7
+bpon
+7
+127.0.0.1:6379&gt; zremrangebyscore mytestzset 0 7
+12
+127.0.0.1:6379&gt; zrange mytestzset 0 -1 withscores
+
+127.0.0.1:6379&gt; zrange mytestzset 0 -1 withscores
+
+127.0.0.1:6379&gt; zadd mytestzset 0 china 1 hz 2 csdn 3 drj 4 op 5 ik 6 akk 7 bhhh 7 bpon 7 basd 7 bmnas 7 bfnm
+12
+127.0.0.1:6379&gt; zrange mytestzset 0 -1 withscores
+china
+0
+hz
+1
+csdn
+2
+drj
+3
+op
+4
+ik
+5
+akk
+6
+basd
+7
+bfnm
+7
+bhhh
+7
+bmnas
+7
+bpon
+7
+127.0.0.1:6379&gt; zincrby mytestzset 1783.09 china
+1783.0899999999999
+127.0.0.1:6379&gt; zrange mytestzset 0 -1 withscores
+hz
+1
+csdn
+2
+drj
+3
+op
+4
+ik
+5
+akk
+6
+basd
+7
+bfnm
+7
+bhhh
+7
+bmnas
+7
+bpon
+7
+china
+1783.0899999999999
+127.0.0.1:6379&gt; zincrby mytestzset 1783.5 china
+3566.5900000000001
+127.0.0.1:6379&gt; zincrby mytestzset -1783.5 china
+1783.0900000000001
+127.0.0.1:6379&gt; zincrby mytestzset -1783.5 china
+-0.40999999999985448
+127.0.0.1:6379&gt; zincrby mytestzset -0.05 china
+-0.45999999999985447
+127.0.0.1:6379&gt; zincrby mytestzset -0.5 china
+-0.95999999999985453
+127.0.0.1:6379&gt; zincrby mytestzset -0.05 china
+-1.0099999999998546
+
+可以发现浮点类型分值两位也有问题 ，所以分值最多加一位小数即可
 </code></pre>
 ]]></content>
     </entry>
