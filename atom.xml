@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://gridea.drj.io</id>
     <title>Gridea</title>
-    <updated>2021-04-12T06:47:03.921Z</updated>
+    <updated>2021-04-12T07:06:54.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://gridea.drj.io"/>
     <link rel="self" href="https://gridea.drj.io/atom.xml"/>
@@ -380,6 +380,117 @@ china
 -1.0099999999998546
 
 可以发现浮点类型分值两位也有问题 ，所以分值最多加一位小数即可
+</code></pre>
+<h3 id="-24"></h3>
+<p>交集<br>
+zinterstore</p>
+<p>计算给定的一个或多个有序集的交集并将结果集存储在新的有序集合 key 中，给定 key 的数量必须以 numkeys 参数指定，并将该交集(结果集)储存到 destination ，默认情况下，结果集中某个成员的分数值是所有给定集下该成员分数值之和，可以使用aggregate参数指定将相同成员的分数取最小值或最大值：</p>
+<pre><code>zinterstore destination numkeys key [key ...] [WEIGHTS weight] [AGGREGATE SUM|MIN|MAX]
+</code></pre>
+<pre><code>127.0.0.1:6379&gt; zadd myzset0 0 drj 1 csdn 2 mail
+3
+127.0.0.1:6379&gt; zadd myzset1 12 drj 13 csdn 24 op
+1
+127.0.0.1:6379&gt; zrange myzset1 0 -1 withscores
+-1
+0
+rick
+2
+roll
+2
+china
+4
+it
+5
+drj
+12
+csdn
+13
+op
+24
+127.0.0.1:6379&gt; zinterstore myzset0_inter_myzset1 2 myzset0 myzset1 aggregate min
+2
+127.0.0.1:6379&gt; zrange myzset0_inter_myzset1 0 -1 withscores
+drj
+0
+csdn
+1
+127.0.0.1:6379&gt; zinterstore myzset0_inter_myzset1 2 myzset0 myzset1 aggregate max
+2
+127.0.0.1:6379&gt; zrange myzset0_inter_myzset1 0 -1 withscores
+drj
+12
+csdn
+13
+127.0.0.1:6379&gt; zinterstore myzset0_inter_myzset1 2 myzset0 myzset1
+2
+127.0.0.1:6379&gt; zrange myzset0_inter_myzset1 0 -1 withscores
+drj
+12
+csdn
+14
+
+aggregate min 取集合中相同成员分值最低的保存到新的集合分值中
+aggregate max 取集合中相同成员分值最高的保存到新的集合分值中
+
+</code></pre>
+<h3 id="-25"></h3>
+<p>并集<br>
+zunionstore</p>
+<p>计算给定的一个或多个有序集的并集，并存储在新的 key 中：</p>
+<pre><code>zunionstore destination numkeys key [key ...] [WEIGHTS weight] [AGGREGATE SUM|MIN|MAX]
+</code></pre>
+<pre><code>127.0.0.1:6379&gt; zrange myzset0 0 -1 withscores
+drj
+0
+csdn
+1
+mail
+2
+127.0.0.1:6379&gt; zrange myzset1 0 -1 withscores
+-1
+0
+rick
+2
+roll
+2
+china
+4
+it
+5
+drj
+12
+csdn
+13
+op
+24
+127.0.0.1:6379&gt; zunionstore myzset0_union_myzset1 2 myzset0 myzset1
+9
+127.0.0.1:6379&gt; zrange myzset0_union_myzset1 0 -1 withscores
+-1
+0
+mail
+2
+rick
+2
+roll
+2
+china
+4
+it
+5
+drj
+12
+csdn
+14
+op
+24
+
+</code></pre>
+<p>应用场景</p>
+<pre><code>点赞排行
+排行榜
+显示分数和信息(如学生分数排名)
 </code></pre>
 ]]></content>
     </entry>
