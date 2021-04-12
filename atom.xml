@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://gridea.drj.io</id>
     <title>Gridea</title>
-    <updated>2021-04-11T14:46:24.979Z</updated>
+    <updated>2021-04-12T03:25:06.115Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://gridea.drj.io"/>
     <link rel="self" href="https://gridea.drj.io/atom.xml"/>
@@ -82,6 +82,49 @@ zscan myzsetZ 0 match *
 <p>结合zrangebylex和zrevrange功能。反序通过字典区间返回有序集合的成员：</p>
 <pre><code>zrevrangebylex key max min [limit offset count]
 </code></pre>
+<h3 id="-13"></h3>
+<p>zrevrangebyscore<br>
+结合zrangebyscore和zrevrange功能。反序通过分数区间返回有序集合的成员</p>
+<pre><code>zrevrangebyscore key max min [WITHSCORES] [LIMIT offset count]
+</code></pre>
+<h3 id="-14"></h3>
+<p>zrevrank<br>
+结合zrank和zrevrange功能。反序返回有序集合中指定成员的索引(下标)：</p>
+<pre><code>zrevrank key  member
+</code></pre>
+<h3 id="-15"></h3>
+<p>zpopmax</p>
+<p>redis5版本之后的新功能。从集合中弹出分数最高的成员，返回该成员和分值，然后从集合中将其移出：</p>
+<pre><code>zpopmax key [count]
+</code></pre>
+<p><img src="https://gridea.drj.io/post-images/1618193147085.png" alt="" loading="lazy"><br>
+如果分值相同，就按照字典顺序弹出最大成员</p>
+<h3 id="-16"></h3>
+<p>zpopmin</p>
+<p>redis5版本之后的新功能。与zpopmax相反，从集合中弹出分数最低的成员，返回该成员和分值，然后从集合中将其移出：</p>
+<pre><code>zpopmin key [count]
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://gridea.drj.io/post-images/1618193772166.png" alt="" loading="lazy"></figure>
+<h3 id="-17"></h3>
+<p>bzpopmax</p>
+<p>redis5版本之后的新功能。在参数中的所有有序集合均为空的情况下，阻塞连接。参数中包含多个有序集合时，按照参数中key的顺序，返回第一个非空key中分数最大的成员和对应的分数。参数 timeout 可以理解为客户端被阻塞的最大秒数值，0 表示永久阻塞。</p>
+<pre><code>bzpopmax key [key ...] timeout
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://gridea.drj.io/post-images/1618197352571.jpg" alt="" loading="lazy"></figure>
+<h3 id="-18"></h3>
+<p>bzpopmin</p>
+<p>redis5版本之后的新功能。与bzpopmax相反。在参数中的所有有序集合均为空的情况下，阻塞连接。参数中包含多个有序集合时，按照参数中key的顺序，返回第一个非空key中分数最小的成员和对应的分数。参数 timeout 可以理解为客户端被阻塞的最大秒数值，0 表示永久阻塞。</p>
+<pre><code>bzpopmin key [key ...] timeout
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://gridea.drj.io/post-images/1618197656375.png" alt="" loading="lazy"></figure>
+<h3 id="-19"></h3>
+<p>删除zrem</p>
+<p>从集合中移除指定的成员：</p>
+<pre><code>zrem key member [member ...]
+</code></pre>
+<h3 id="-20"></h3>
+<p>zremrangebylex</p>
+<p>结合zrem和zrangebylex功能：将zrangebylex匹配的结果从有序集合中删除：</p>
 ]]></content>
     </entry>
     <entry>
