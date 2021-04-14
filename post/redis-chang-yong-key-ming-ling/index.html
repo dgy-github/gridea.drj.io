@@ -2,24 +2,31 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Hello Gridea | Gridea</title>
+<title>redis 常用key命令 | Gridea</title>
 <link rel="shortcut icon" href="https://gridea.drj.io/favicon.ico?v=1618368599547">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://gridea.drj.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Hello Gridea | Gridea - Atom Feed" href="https://gridea.drj.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="redis 常用key命令 | Gridea - Atom Feed" href="https://gridea.drj.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="👏  欢迎使用 Gridea ！
-✍️  Gridea 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...
+    <meta name="description" content="
+查看所有key
+keys pattern
 
-Github
-Gridea 主页
-示例网站
-特性👇
-📝  你可以使用最酷的 Markdo..." />
-    <meta name="keywords" content="Gridea" />
+查看key的类型
+type key
+
+随即返回一个key
+randomkey
+
+删除key
+del key [key2 key3 key4 ...]
+
+迭代指定pattern 的key
+返回 k..." />
+    <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -81,54 +88,104 @@ Gridea 主页
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Hello Gridea
+              redis 常用key命令
             </h2>
             <div class="post-info">
               <span>
-                2018-12-12
+                2021-04-12
               </span>
               <span>
                 2 min read
               </span>
               
-                <a href="https://gridea.drj.io/tag/AAg0eJ2eL/" class="post-tag">
-                  # Gridea
-                </a>
-              
             </div>
-            
-              <img class="post-feature-image" src="https://gridea.drj.io/post-images/hello-gridea.png" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+                <h3 id=""></h3>
+<p>查看所有key<br>
+keys pattern</p>
+<h3 id="-2"></h3>
+<p>查看key的类型<br>
+type key</p>
+<h3 id="-3"></h3>
+<p>随即返回一个key<br>
+randomkey</p>
+<h3 id="-4"></h3>
+<p>删除key<br>
+del key [key2 key3 key4 ...]</p>
+<h3 id="-5"></h3>
+<p>迭代指定pattern 的key<br>
+返回 key 的列表：</p>
+<pre><code>scan cursor [MATCH pattern]  [COUNT count]
+</code></pre>
+<pre><code>scan 0 match * count 1 
+扫描 游标根据上次返回的 结果 ，0 表示一次遍历开始
+最后以 0 返回表示，扫描一遍结束
+</code></pre>
+<h3 id="-6"></h3>
+<p>判断key是否存在</p>
+<p>返回状态1/0，True/False，当传入多个key时返回or的结果，即只要有一个存在就返回True：</p>
+<pre><code>exists key [key ...]
+</code></pre>
+<h3 id="-7"></h3>
+<p>序列化</p>
+<pre><code>dump key
+</code></pre>
+<h3 id="-8"></h3>
+<p>将 key 从当前db移动到另一个db中<br>
+返回1/0 ，true/false</p>
+<pre><code>move key db_index
+</code></pre>
+<h3 id="-9"></h3>
+<p>重命名key</p>
+<p>直接修改key的名称：</p>
+<pre><code>rename key newkey
+</code></pre>
+<h3 id="-10"></h3>
+<p>过期策略</p>
+<p>给指定的 key 设置过期时间，以秒或unix timestamp为单位：</p>
+<pre><code>    expire key seconds
+    expireat key timestamp 
+</code></pre>
+<p>给指定的 key 设置过期时间，以毫秒或unix timestamp为单位：</p>
+<pre><code>    pexpire key milliseconds
+    pexpireat key milliseconds-timestamp 
+    ttl key  查看 key 过期时间
+</code></pre>
+<h3 id="-11"></h3>
+<p>移除 key 的过期时间，key 将持久保持：</p>
+<pre><code>persist key
+</code></pre>
+<h3 id="-12"></h3>
+<p>以秒为单位，返回给定 key 的剩余生存时间(TTL, time to live)：</p>
+<pre><code>ttl key
+</code></pre>
+<p>以毫秒为单位返回 key 的剩余生存时间：</p>
+<pre><code>pttl key
+</code></pre>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E7%89%B9%E6%80%A7">特性👇</a></li>
+<li>
+<ul>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -138,6 +195,15 @@ Gridea 主页
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://gridea.drj.io/post/redis-shu-ju-lei-xing-zset/">
+              <h3 class="post-title">
+                redis 数据类型  zset
+              </h3>
+            </a>
+          </div>
         
 
         

@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>redis 数据类型之字符串 String | Gridea</title>
-<link rel="shortcut icon" href="https://gridea.drj.io/favicon.ico?v=1618211202949">
+<link rel="shortcut icon" href="https://gridea.drj.io/favicon.ico?v=1618368599547">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://gridea.drj.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="redis 数据类型之字符串 String | Gridea - Atom Feed" href="https://gridea.drj.io/atom.xml">
@@ -30,7 +30,7 @@ help @string
       <div class="main-content">
         <div class="site-header">
   <a href="https://gridea.drj.io">
-  <img class="avatar" src="https://gridea.drj.io/images/avatar.png?v=1618211202949" alt="">
+  <img class="avatar" src="https://gridea.drj.io/images/avatar.png?v=1618368599547" alt="">
   </a>
   <h1 class="site-title">
     Gridea
@@ -115,15 +115,15 @@ set</p>
 set key value [ex seconds] [px milliseconds] [nx|xx]
 </code></pre>
 <p>使用set命令新增一个键值对，EX,PX用法：</p>
-<pre><code>127.0.0.1:6379&gt; set name 王义凯
+<pre><code>127.0.0.1:6379&gt; set name 
 OK
 127.0.0.1:6379&gt; get name
 &quot;\xe7\x8e\x8b\xe4\xb9\x89\xe5\x87\xaf&quot;   
-127.0.0.1:6379&gt; set name wang,yikai
+127.0.0.1:6379&gt; set name di,renjie
 OK
 127.0.0.1:6379&gt; get name
 &quot;wang,yikai&quot;
-127.0.0.1:6379&gt; set name_ex wyk ex 10
+127.0.0.1:6379&gt; set name_ex drj ex 10
 OK
 127.0.0.1:6379&gt; ttl name_ex
 (integer) 2
@@ -131,7 +131,7 @@ OK
 (integer) -2
 127.0.0.1:6379&gt; get name_ex
 (nil)
-127.0.0.1:6379&gt; set name_px wyk px 10000
+127.0.0.1:6379&gt; set name_px drj px 10000
 OK
 127.0.0.1:6379&gt; ttl name_px
 (integer) 4
@@ -139,7 +139,7 @@ OK
 (integer) 0
 127.0.0.1:6379&gt; get name_px
 (nil)
-127.0.0.1:6379&gt; setex name_ex 10 wyk
+127.0.0.1:6379&gt; setex name_ex 10 drj
 OK
 127.0.0.1:6379&gt; ttl name_ex
 (integer) 3
@@ -147,7 +147,7 @@ OK
 (integer) 0
 127.0.0.1:6379&gt; get name_ex
 (nil)
-127.0.0.1:6379&gt; psetex name_px 10000 wyk
+127.0.0.1:6379&gt; psetex name_px 10000 drj
 OK
 127.0.0.1:6379&gt; ttl name_px
 (integer) 3
@@ -157,38 +157,38 @@ OK
 (nil)
 </code></pre>
 <p>SET中 NX,XX用法：</p>
-<pre><code>127.0.0.1:6379&gt; set name_csdn wyk
+<pre><code>127.0.0.1:6379&gt; set name_csdn drj
 OK
 127.0.0.1:6379&gt; get name_csdn
-&quot;wyk&quot;
-127.0.0.1:6379&gt; set name_csdn wyk2
+&quot;drj&quot;
+127.0.0.1:6379&gt; set name_csdn drj2
 OK
 127.0.0.1:6379&gt; get name_csdn
-&quot;wyk2&quot;
-127.0.0.1:6379&gt; set name_nx wyk nx
+&quot;drj2&quot;
+127.0.0.1:6379&gt; set name_nx drj nx
 OK
 127.0.0.1:6379&gt; get name_nx
-&quot;wyk&quot;
-127.0.0.1:6379&gt; set name_nx wyk2 nx
+&quot;drj&quot;
+127.0.0.1:6379&gt; set name_nx drj2 nx
 (nil)
 127.0.0.1:6379&gt; get name_nx
-&quot;wyk&quot;
-127.0.0.1:6379&gt; setnx name_nx wyk2
+&quot;drj&quot;
+127.0.0.1:6379&gt; setnx name_nx drj2
 (integer) 0
 127.0.0.1:6379&gt; get name_nx
-&quot;wyk&quot;
-127.0.0.1:6379&gt; set name_xx wyk xx
+&quot;drj&quot;
+127.0.0.1:6379&gt; set name_xx drj xx
 (nil)
 127.0.0.1:6379&gt; get name_xx
 (nil)
-127.0.0.1:6379&gt; set name_xx wyk
+127.0.0.1:6379&gt; set name_xx drj
 OK
 127.0.0.1:6379&gt; get name_xx
-&quot;wyk&quot;
-127.0.0.1:6379&gt; set name_xx wyk2 xx
+&quot;drj&quot;
+127.0.0.1:6379&gt; set name_xx drj2 xx
 OK
 127.0.0.1:6379&gt; get name_xx
-&quot;wyk2&quot;
+&quot;drj2&quot;
 </code></pre>
 <p>mset</p>
 <p>mset,msetnx</p>
@@ -216,15 +216,15 @@ del</p>
 2) (nil)
 3) (nil)
 4) (nil)
-5) &quot;wyk&quot;
+5) &quot;drj&quot;
 </code></pre>
 <p>改<br>
 set</p>
 <p>上面set中介绍了，如果对同一个key进行set即可更新该数据：</p>
-<pre><code>127.0.0.1:6379&gt; set email wyk@csdn.com
+<pre><code>127.0.0.1:6379&gt; set email drj@csdn.com
 OK
 127.0.0.1:6379&gt; get email
-&quot;wyk@csdn.com&quot;
+&quot;drj@csdn.com&quot;
 127.0.0.1:6379&gt; set email rick@csdn.com
 OK
 127.0.0.1:6379&gt; get email
