@@ -2,22 +2,19 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>redis 数据结构 set | Gridea</title>
+<title>本地虚拟机安装oracle19c，虚拟机安装篇  | Gridea</title>
 <link rel="shortcut icon" href="https://gridea.drj.io/favicon.ico?v=1618904529665">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://gridea.drj.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="redis 数据结构 set | Gridea - Atom Feed" href="https://gridea.drj.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="本地虚拟机安装oracle19c，虚拟机安装篇  | Gridea - Atom Feed" href="https://gridea.drj.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="增加元素
-可以增加若干个元素的set 集合
- SADD key member [member ...]
-  summary: Add one or more members to a set
-  since: 1.0.0
-
-获取集合中元素的..." />
+    <meta name="description" content="
+本地安装虚拟机环境准备 win10 x64
+安装包版本 vm 客户端 ：VMware-workstation-full-16.1.1-17801498
+官网地址：https://www.vmware.com/cn/products/wor..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -80,107 +77,60 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              redis 数据结构 set
+              本地虚拟机安装oracle19c，虚拟机安装篇 
             </h2>
             <div class="post-info">
               <span>
-                2021-04-07
+                2021-04-20
               </span>
               <span>
-                3 min read
+                1 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>增加元素<br>
-可以增加若干个元素的set 集合</p>
-<pre><code> SADD key member [member ...]
-  summary: Add one or more members to a set
-  since: 1.0.0
-</code></pre>
-<p>获取集合中元素的数量</p>
-<pre><code>  SCARD key
-  summary: Get the number of members in a set
-  since: 1.0.0
-</code></pre>
-<p>获取差集<br>
-对比多个集合的差集，返回左侧集合中，其他集合中没有的元素 有点像是<br>
-(A-A∩B...C) 取集合A中和其他集合相交部分的元素后的差集</p>
-<pre><code>sdiff key [key ...]
-summary: Subtract multiple sets
-since: 1.0.0
-</code></pre>
-<p>获取差集，并且保存到一个新的集合中（主要还是A集合为主）</p>
-<pre><code>  sdiffstore destination key [key ...]
-  summary: Subtract multiple sets and store the resulting set in a key
-  since: 1.0.0
-</code></pre>
-<p>获取多个集合交集部分的元素</p>
-<pre><code>sinter key [key ...]
-summary: Intersect multiple sets
-since: 1.0.0
-</code></pre>
-<p>获取多个集合交易部分的元素并且保存到一个新的集合中</p>
-<pre><code>sinterstore destination key [key ...]
-summary: Intersect multiple sets and store the resulting set in a key
-since: 1.0.0
-</code></pre>
-<p>查看集合中是否包含该元素</p>
-<pre><code>  SISMEMBER key member
-  summary: Determine if a given value is a member of a set
-  since: 1.0.0
-</code></pre>
-<p>查看集合中元素</p>
-<pre><code> smembers key
- summary: Get all the members in a set
- since: 1.0.0
-</code></pre>
-<p>将元素从原来的集合中转移到 目标集合中</p>
-<pre><code>  smove source destination member
-  summary: Move a member from one set to another
-  since: 1.0.0
-</code></pre>
-<p>随机弹出 count 个元素</p>
-<pre><code>spop key [count]
-summary: Remove and return one or multiple random members from a set
-since: 1.0.0
-</code></pre>
-<p>随机获取 count 数量个元素</p>
-<pre><code>srandmenber key [count]
-summary: Get one or multiple random members from a set
-since: 1.0.0
-</code></pre>
-<p>从集合中删除 一个或者多个指定元素</p>
-<pre><code>  srem key member [member ...]
-  summary: Remove one or more members from a set
-  since: 1.0.0
-</code></pre>
-<p>sscan 返回匹配 pattern 的 count 数量的元素</p>
-<p>只有两种游标是合法的：</p>
-<pre><code>在开始一个新的迭代时， 游标必须为 0 。
-增量式迭代命令在执行之后返回的， 用于延续（continue）迭代过程的游标。
-</code></pre>
-<pre><code> sscan key cursor [MATCH pattern] [COUNT count]
- summary: Incrementally iterate Set elements
- since: 2.8.0
- sscan myset0 0 match  n*
-</code></pre>
-<p>取多个集合的并集，重复的会被去重</p>
-<pre><code>  sunion key [key ...]
-  summary: Add multiple sets
-  since: 1.0.0
-</code></pre>
-<p>取多个集合的并集，去重后，保存为一个新的集合</p>
-<pre><code>  sunionstore destination key [key ...]
-  summary: Add multiple sets and store the resulting set in a key
-  since: 1.0.0
-</code></pre>
+                <h3 id=""></h3>
+<p>本地安装虚拟机环境准备 win10 x64<br>
+安装包版本 vm 客户端 ：VMware-workstation-full-16.1.1-17801498<br>
+官网地址：https://www.vmware.com/cn/products/workstation-pro/workstation-pro-evaluation.html<br>
+linux 镜像文件包： CentOS-7-x86_64-DVD-2009<br>
+网易云镜像地址库：http://mirrors.163.com/centos/7/isos/x86_64/CentOS-7-x86_64-DVD-2009.iso</p>
+<h3 id="-2"></h3>
+<p>第一步安装vm 客户端<br>
+按照步骤一步一步安装，注意不要安装到c盘底下<img src="https://gridea.drj.io/post-images/1618901620635.png" alt="" loading="lazy"></p>
+<h3 id="-3"></h3>
+<p>第二步安装centos7 镜像文件：</p>
+<ul>
+<li>新建虚拟机 <img src="https://gridea.drj.io/post-images/1618901832268.png" alt="" loading="lazy"></li>
+<li>选择镜像文件<br>
+<img src="https://gridea.drj.io/post-images/1618902761099.png" alt="" loading="lazy"></li>
+<li>设置登录linux 用户名、密码<br>
+<img src="https://gridea.drj.io/post-images/1618902969735.png" alt="" loading="lazy"><br>
+其他的按照步骤一步一步安装即可</li>
+</ul>
+<h3 id="-4"></h3>
+<p>第三步 环境配置，虚拟机硬件配置等<br>
+<img src="https://gridea.drj.io/post-images/1618904527261.png" alt="" loading="lazy"></p>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
@@ -189,9 +139,9 @@ since: 1.0.0
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://gridea.drj.io/post/redis-shu-ju-jie-gou-list/">
+            <a href="https://gridea.drj.io/post/redis-chang-yong-key-ming-ling/">
               <h3 class="post-title">
-                redis 数据结构 list  
+                redis 常用key命令
               </h3>
             </a>
           </div>

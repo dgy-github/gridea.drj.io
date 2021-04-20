@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://gridea.drj.io</id>
     <title>Gridea</title>
-    <updated>2021-04-14T02:50:04.537Z</updated>
+    <updated>2021-04-20T07:42:37.365Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://gridea.drj.io"/>
     <link rel="self" href="https://gridea.drj.io/atom.xml"/>
@@ -10,6 +10,36 @@
     <logo>https://gridea.drj.io/images/avatar.png</logo>
     <icon>https://gridea.drj.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[本地虚拟机安装oracle19c，虚拟机安装篇 ]]></title>
+        <id>https://gridea.drj.io/post/ben-di-xu-ni-ji-an-zhuang-oracle19cxu-ni-ji-an-zhuang-pian/</id>
+        <link href="https://gridea.drj.io/post/ben-di-xu-ni-ji-an-zhuang-oracle19cxu-ni-ji-an-zhuang-pian/">
+        </link>
+        <updated>2021-04-20T06:30:29.000Z</updated>
+        <content type="html"><![CDATA[<h3 id=""></h3>
+<p>本地安装虚拟机环境准备 win10 x64<br>
+安装包版本 vm 客户端 ：VMware-workstation-full-16.1.1-17801498<br>
+官网地址：https://www.vmware.com/cn/products/workstation-pro/workstation-pro-evaluation.html<br>
+linux 镜像文件包： CentOS-7-x86_64-DVD-2009<br>
+网易云镜像地址库：http://mirrors.163.com/centos/7/isos/x86_64/CentOS-7-x86_64-DVD-2009.iso</p>
+<h3 id="-2"></h3>
+<p>第一步安装vm 客户端<br>
+按照步骤一步一步安装，注意不要安装到c盘底下<img src="https://gridea.drj.io/post-images/1618901620635.png" alt="" loading="lazy"></p>
+<h3 id="-3"></h3>
+<p>第二步安装centos7 镜像文件：</p>
+<ul>
+<li>新建虚拟机 <img src="https://gridea.drj.io/post-images/1618901832268.png" alt="" loading="lazy"></li>
+<li>选择镜像文件<br>
+<img src="https://gridea.drj.io/post-images/1618902761099.png" alt="" loading="lazy"></li>
+<li>设置登录linux 用户名、密码<br>
+<img src="https://gridea.drj.io/post-images/1618902969735.png" alt="" loading="lazy"><br>
+其他的按照步骤一步一步安装即可</li>
+</ul>
+<h3 id="-4"></h3>
+<p>第三步 环境配置，虚拟机硬件配置等<br>
+<img src="https://gridea.drj.io/post-images/1618904527261.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[redis 常用key命令]]></title>
         <id>https://gridea.drj.io/post/redis-chang-yong-key-ming-ling/</id>
