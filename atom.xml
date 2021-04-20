@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://gridea.drj.io</id>
     <title>Gridea</title>
-    <updated>2021-04-20T07:44:52.051Z</updated>
+    <updated>2021-04-20T08:27:22.536Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://gridea.drj.io"/>
     <link rel="self" href="https://gridea.drj.io/atom.xml"/>
@@ -38,6 +38,56 @@ linux 镜像文件包： CentOS-7-x86_64-DVD-2009<br>
 <h3 id="-4"></h3>
 <p>第三步 环境配置，虚拟机硬件配置等<br>
 <img src="https://gridea.drj.io/post-images/1618904527261.png" alt="" loading="lazy"></p>
+<h3 id="-5"></h3>
+<p>第四步 ip地址固定</p>
+<ul>
+<li>
+<p>根据当前虚拟机配置的网卡设备管理器查看当前虚拟机网卡ip地址等信息<img src="https://gridea.drj.io/post-images/1618905719464.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>查看当前网卡信息ip、子网掩码、网关等，记住不要保存，只是查看然后退出即可，记住网关等信息<br>
+<img src="https://gridea.drj.io/post-images/1618906484097.png" alt="" loading="lazy"><br>
+<img src="https://gridea.drj.io/post-images/1618906602972.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>物理机 此处指 安装虚拟的那台window系统电脑 进行网卡处理<br>
+<img src="https://gridea.drj.io/post-images/1618906613339.png" alt="" loading="lazy"><br>
+<img src="https://gridea.drj.io/post-images/1618906623066.png" alt="" loading="lazy"></p>
+<ul>
+<li>linux 系统中设置网关信息等</li>
+</ul>
+<p>查看本机ip地址</p>
+</li>
+</ul>
+<p>1）.centos7开始用ip addr命令看ip地址，可以看出网卡名叫ifcfg-ens33,(截图前已自己配置过ip)</p>
+<p>设定IP地址</p>
+<p>1）.设定网卡的配置文件位置：/etc/sysconfig/network-scripts/ifcfg-ens33</p>
+<p>2）.进入该目录，cd /etc/sysconfig/network-scripts/</p>
+<p>3）.养成好习惯修改东西前先备份，cp ifcfg-ens33 ifcfg-ens33cpay</p>
+<p>4）.vim ifcfg-ens33</p>
+<pre><code>TYPE=&quot;Ethernet&quot;
+PROXY_METHOD=&quot;none&quot;
+BROWSER_ONLY=&quot;no&quot;
+BOOTPROTO=&quot;static&quot;  # 使用静态IP地址，默认为dhcp
+DEFROUTE=&quot;yes&quot;
+IPV4_FAILURE_FATAL=&quot;no&quot;
+IPV6INIT=&quot;yes&quot;
+IPV6_AUTOCONF=&quot;yes&quot;
+IPV6_DEFROUTE=&quot;yes&quot;
+IPV6_FAILURE_FATAL=&quot;no&quot;
+IPV6_ADDR_GEN_MODE=&quot;stable-privacy&quot;
+NAME=&quot;ens33&quot;
+UUID=&quot;46be3446-7c04-472b-8c46-c1102d7cbe52&quot;
+DEVICE=&quot;ens33&quot;
+ONBOOT=&quot;yes&quot;
+IPADDR=&quot;192.168.31.100&quot; #ip地址
+NETMASK=&quot;255.255.255.0&quot; #子网掩码
+</code></pre>
+<p>5）.重启网络服务</p>
+<p>centos7重启服务已经换成了systemctl，老命令service network restart也是可以使用的。</p>
+<p>我们使用新命令试试：systemctl restart network.service</p>
+<p>值得注意的是，新命令不再有提示，没报错即成功。</p>
+<p>6）,最后使用Ifconfig命令查询下ip地址</p>
 ]]></content>
     </entry>
     <entry>
