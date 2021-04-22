@@ -2,30 +2,17 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>redis 常用key命令 | Gridea</title>
+<title>spring 源码解析阅读 | Gridea</title>
 <link rel="shortcut icon" href="https://gridea.drj.io/favicon.ico?v=1619058650858">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://gridea.drj.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="redis 常用key命令 | Gridea - Atom Feed" href="https://gridea.drj.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="spring 源码解析阅读 | Gridea - Atom Feed" href="https://gridea.drj.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="
-查看所有key
-keys pattern
-
-查看key的类型
-type key
-
-随即返回一个key
-randomkey
-
-删除key
-del key [key2 key3 key4 ...]
-
-迭代指定pattern 的key
-返回 k..." />
+    <meta name="description" content="11
+" />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -88,108 +75,25 @@ del key [key2 key3 key4 ...]
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              redis 常用key命令
+              spring 源码解析阅读
             </h2>
             <div class="post-info">
               <span>
-                2021-04-12
+                2021-04-21
               </span>
               <span>
-                2 min read
+                1 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h3 id=""></h3>
-<p>查看所有key<br>
-keys pattern</p>
-<h3 id="-2"></h3>
-<p>查看key的类型<br>
-type key</p>
-<h3 id="-3"></h3>
-<p>随即返回一个key<br>
-randomkey</p>
-<h3 id="-4"></h3>
-<p>删除key<br>
-del key [key2 key3 key4 ...]</p>
-<h3 id="-5"></h3>
-<p>迭代指定pattern 的key<br>
-返回 key 的列表：</p>
-<pre><code>scan cursor [MATCH pattern]  [COUNT count]
-</code></pre>
-<pre><code>scan 0 match * count 1 
-扫描 游标根据上次返回的 结果 ，0 表示一次遍历开始
-最后以 0 返回表示，扫描一遍结束
-</code></pre>
-<h3 id="-6"></h3>
-<p>判断key是否存在</p>
-<p>返回状态1/0，True/False，当传入多个key时返回or的结果，即只要有一个存在就返回True：</p>
-<pre><code>exists key [key ...]
-</code></pre>
-<h3 id="-7"></h3>
-<p>序列化</p>
-<pre><code>dump key
-</code></pre>
-<h3 id="-8"></h3>
-<p>将 key 从当前db移动到另一个db中<br>
-返回1/0 ，true/false</p>
-<pre><code>move key db_index
-</code></pre>
-<h3 id="-9"></h3>
-<p>重命名key</p>
-<p>直接修改key的名称：</p>
-<pre><code>rename key newkey
-</code></pre>
-<h3 id="-10"></h3>
-<p>过期策略</p>
-<p>给指定的 key 设置过期时间，以秒或unix timestamp为单位：</p>
-<pre><code>    expire key seconds
-    expireat key timestamp 
-</code></pre>
-<p>给指定的 key 设置过期时间，以毫秒或unix timestamp为单位：</p>
-<pre><code>    pexpire key milliseconds
-    pexpireat key milliseconds-timestamp 
-    ttl key  查看 key 过期时间
-</code></pre>
-<h3 id="-11"></h3>
-<p>移除 key 的过期时间，key 将持久保持：</p>
-<pre><code>persist key
-</code></pre>
-<h3 id="-12"></h3>
-<p>以秒为单位，返回给定 key 的剩余生存时间(TTL, time to live)：</p>
-<pre><code>ttl key
-</code></pre>
-<p>以毫秒为单位返回 key 的剩余生存时间：</p>
-<pre><code>pttl key
-</code></pre>
+                <p>11</p>
 
               </div>
               <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li>
-<ul>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
+                
               </div>
             </div>
           </article>
@@ -198,9 +102,9 @@ del key [key2 key3 key4 ...]</p>
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://gridea.drj.io/post/redis-shu-ju-lei-xing-zset/">
+            <a href="https://gridea.drj.io/post/oracle19c-an-zhuang-zhun-bei-pian/">
               <h3 class="post-title">
-                redis 数据类型  zset
+                oracle19c 安装准备篇
               </h3>
             </a>
           </div>
