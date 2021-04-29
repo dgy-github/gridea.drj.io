@@ -2,17 +2,26 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>spring 源码解析阅读 | Gridea</title>
+<title>oracle19c 启动篇 | Gridea</title>
 <link rel="shortcut icon" href="https://gridea.drj.io/favicon.ico?v=1619677396738">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://gridea.drj.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="spring 源码解析阅读 | Gridea - Atom Feed" href="https://gridea.drj.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="oracle19c 启动篇 | Gridea - Atom Feed" href="https://gridea.drj.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="11
-" />
+    <meta name="description" content="启动19c的私人库db
+
+准备启动监听，此时需要切换到安装oracle的用户目录下 ：
+su - oracle
+
+
+登入oracle
+sqlplus /nolog
+进行以sysdba 用户连接
+connect /as sysdba;
+启动实..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -75,11 +84,11 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              spring 源码解析阅读
+              oracle19c 启动篇
             </h2>
             <div class="post-info">
               <span>
-                2021-04-21
+                2021-04-28
               </span>
               <span>
                 1 min read
@@ -89,11 +98,50 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>11</p>
+                <p>启动19c的私人库db</p>
+<h3 id=""></h3>
+<p>准备启动监听，此时需要切换到安装oracle的用户目录下 ：</p>
+<pre><code>su - oracle
+</code></pre>
+<h3 id="-2"></h3>
+<p>登入oracle</p>
+<pre><code>sqlplus /nolog
+进行以sysdba 用户连接
+connect /as sysdba;
+启动实例
+startup;
+</code></pre>
+<h3 id="-3"></h3>
+<p>查看目前pdb 名称,选择session容器，再启动实例</p>
+<pre><code>select pdb_id,pdb_name,dbid,status,creation_scn from dba_pdbs;
+例如我虚拟机上oracle pdb 实例名是 pdb19
+选择session 
+alter session set container=pdb19;
+启动实例
+startup;
+</code></pre>
+<h3 id="-4"></h3>
+<p>需要停掉oracle实例</p>
+<pre><code>shutdown immediate;
+</code></pre>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
@@ -102,9 +150,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://gridea.drj.io/post/oracle19c-an-zhuang-zhun-bei-pian/">
+            <a href="https://gridea.drj.io/post/oracle-da-shu-ju-zhun-bei/">
               <h3 class="post-title">
-                oracle19c 安装准备篇
+                oracle 大数据准备
               </h3>
             </a>
           </div>
