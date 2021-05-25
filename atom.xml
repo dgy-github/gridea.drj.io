@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://gridea.drj.io</id>
     <title>Gridea</title>
-    <updated>2021-04-29T06:31:55.343Z</updated>
+    <updated>2021-05-25T02:19:57.347Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://gridea.drj.io"/>
     <link rel="self" href="https://gridea.drj.io/atom.xml"/>
@@ -52,6 +52,92 @@ startup;
         <updated>2021-04-21T06:08:55.000Z</updated>
         <content type="html"><![CDATA[<h3 id=""></h3>
 <p>准备测试的场景是，几百万数据量的一张表，更新表中几个字段的值，通过批量更新的方式</p>
+<h3 id="-2"></h3>
+<p>学习准备</p>
+<ul>
+<li>1.存储过程，模拟百万数据进行测试</li>
+</ul>
+<pre><code>一、存储过程
+1.存储过程是用于特定操作的pl/sql语句块
+
+2.存储过程是预编译过的，经优化后存储在sql内存中，使用时无需再次编译，提高了使用效率；
+
+3.存储过程的代码直接存放在数据库中，一般直接通过存储过程的名称调用，减少了网络流量，加快了系统执行效率；
+
+二、存储过程与函数的区别
+
+1.一般来说，存储过程实现的功能要复杂一点，而函数的实现的功能针对性比较强。
+
+2.对于存储过程来说可以返回参数(output)，而函数只能返回值或者表对象。
+
+3.存储过程一般是作为一个独立的部分来执行，而函数可以作为查询语句的一个部分来调用，由于函数可以返回一个表对象，因此它可以在查询语句中位于FROM关键字的后面。
+
+三、存储过程的优点
+
+1.执行速度更快 – 在数据库中保存的存储过程语句都是编译过的
+
+2.允许模块化程序设计 ，程序的可移植性更强– 类似方法的复用（使用存储过程可以实现存储过程设计和编码工作的分开进行，只要将存储过程名、参数、返回信息等告诉编程人员即可）；
+
+3.提高系统安全性 – 防止SQL注入 （执行存储过程的用户要具有一定的权限才能使用存储过程）
+
+4.减少网络流通量 – 只要传输存储过程的名称（在大批数据查询时使用存储过程分页查询比其他方式的分页要快很多）
+
+5.在同时进行逐主、从表间的数据维护及有效性验证时，使用存储过程更加方便，可以有效的利用SQL中的事务处理机制　
+
+四、存储过程的创建
+Oracle存储过程包含三部分：过程声明，执行过程部分，存储过程异常。
+
+(1) 创建：
+
+CREATE [OR REPLACE] PROCEDURE procedure_name [(parameter1[model] datatype1, parameter2 [model] datatype2..)]
+IS[AS]
+BEGIN
+PL/SQL;
+END [procedure_name];
+
+1. parameter用于指定参数，model用于指定参数模式，datatype用于指定参数类型
+
+2. 定义存储过程的参数时，只能指定数据类型，不能指定数据长度
+
+3. IS/AS用于开始PL/SQL代码块
+
+4. 创建存储过程时，既可以指定参数也可以不指定任何参数；
+
+5. 存储过程参数：1）输入参数 IN IN用于接收调用环境的输入参数（创建存储过程时，输入参数的IN可以省略）
+
+6) 输出参数 OUT OUT用于将输出数据传递到调用环境
+
+7) 输入输出参数（IN OUT）其中IN用于接收调用环境的输入参数，OUT用于将输出数据传递到调用环境
+
+2)编译存储过程
+
+ALTER PROCEDURE procedure_name COMPILE
+
+3）调用存储过程（两种）
+
+A）命令行：exec/execute procedure_name 
+
+B）Sql窗口:
+
+DECLARE
+ param1 number;
+ param2 VARCHAR2(10) := '~Hello~';
+BEGIN
+ procedure_name(param1, param2);
+END;
+
+4）删除存储过程
+
+DROP PROCEDURE procedure_name;
+</code></pre>
+<p>上面就是存储过程的说明以及一些语法<br>
+目前的准备模拟测试的多数据量的，只是偶尔使用，所以直接用函数就行</p>
+<ul>
+<li>2.PLSQL编程学习<br>
+PL/SQL定义：<pre><code>PL/SQL是 Procedure Language &amp; Structured Query Language 的缩写。ORACLE的SQL是支持ANSI(American national Standards Institute)和ISO92 (International Standards Organization)标准的产品。PL/SQL是对SQL语言存储过程语言的扩展。从ORACLE6以后，ORACLE的RDBMS附带了PL/SQL。它现在已经成为一种过程处理语言，简称PL/SQL。目前的PL/SQL包括两部分，一部分是数据库引擎部分；另一部分是可嵌入到许多产品（如C语言，JAVA语言等）工具中的独立引擎。可以将这两部分称为：数据库PL/SQL和工具PL/SQL。两者的编程非常相似。都具有编程结构、语法和逻辑机制。工具PL/SQL另外还增加了用于支持工具（如ORACLE Forms）的句法。
+</code></pre>
+</li>
+</ul>
 ]]></content>
     </entry>
     <entry>
