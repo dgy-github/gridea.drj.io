@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Gridea</title>
-<link rel="shortcut icon" href="https://gridea.drj.io/favicon.ico?v=1621909177606">
+<link rel="shortcut icon" href="https://gridea.drj.io/favicon.ico?v=1624499630560">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://gridea.drj.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Gridea - Atom Feed" href="https://gridea.drj.io/atom.xml">
@@ -18,7 +18,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://gridea.drj.io">
-  <img class="avatar" src="https://gridea.drj.io/images/avatar.png?v=1621909177606" alt="">
+  <img class="avatar" src="https://gridea.drj.io/images/avatar.png?v=1624499630560" alt="">
   </a>
   <h1 class="site-title">
     Gridea
@@ -99,7 +99,7 @@
           2021-04-21
         </span>
         <span>
-          5 min read
+          6 min read
         </span>
         
       </div>
@@ -118,13 +118,19 @@
           2021-04-21
         </span>
         <span>
-          1 min read
+          10 min read
         </span>
         
       </div>
       
       <div class="post-abstract">
-        
+        <p>###spring 源码 aspect.jar 包学习<br>
+AOP的实现方式有两种：</p>
+<pre><code> 1.  AOP框架在编译阶段，就对目标类进行修改，得到的class文件已经是被修改过的。生成静态的AOP代理类（生成*.class文件已经被改掉了，需要使用特定的编译器）。以AspectJ为代表 —— 静态AOP框架。
+ 2.  AOP框架在运行阶段，动态生成AOP代理（在内存中动态地生成AOP代理类），以实现对目标对象的增强。它不需要特殊的编译器。以Spring AOP为代表。—— 动态AOP框架。
+</code></pre>
+<p>动态AOP框架不需要在编译时对目标类进行增强，而是运行时生成目标类的代理类，该代理类要么与目标类实现相同的接口，要么是目标类的子类——总之，代理类的实例可作为目标类的实例来使用。一般来说，编译时增强的 AOP 框架在性能上更有优势——因为运行时动态增强的 AOP 框架需要每次运行时都进行动态增强。</p>
+
       </div>
     </article>
   

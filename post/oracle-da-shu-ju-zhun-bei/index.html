@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>oracle 大数据准备 | Gridea</title>
-<link rel="shortcut icon" href="https://gridea.drj.io/favicon.ico?v=1621909177606">
+<link rel="shortcut icon" href="https://gridea.drj.io/favicon.ico?v=1624499630560">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://gridea.drj.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="oracle 大数据准备 | Gridea - Atom Feed" href="https://gridea.drj.io/atom.xml">
@@ -31,7 +31,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://gridea.drj.io">
-  <img class="avatar" src="https://gridea.drj.io/images/avatar.png?v=1621909177606" alt="">
+  <img class="avatar" src="https://gridea.drj.io/images/avatar.png?v=1624499630560" alt="">
   </a>
   <h1 class="site-title">
     Gridea
@@ -91,7 +91,7 @@
                 2021-04-21
               </span>
               <span>
-                5 min read
+                6 min read
               </span>
               
             </div>
@@ -182,10 +182,62 @@ DROP PROCEDURE procedure_name;
 目前的准备模拟测试的多数据量的，只是偶尔使用，所以直接用函数就行</p>
 <ul>
 <li>2.PLSQL编程学习<br>
-PL/SQL定义：<pre><code>PL/SQL是 Procedure Language &amp; Structured Query Language 的缩写。ORACLE的SQL是支持ANSI(American national Standards Institute)和ISO92 (International Standards Organization)标准的产品。PL/SQL是对SQL语言存储过程语言的扩展。从ORACLE6以后，ORACLE的RDBMS附带了PL/SQL。它现在已经成为一种过程处理语言，简称PL/SQL。目前的PL/SQL包括两部分，一部分是数据库引擎部分；另一部分是可嵌入到许多产品（如C语言，JAVA语言等）工具中的独立引擎。可以将这两部分称为：数据库PL/SQL和工具PL/SQL。两者的编程非常相似。都具有编程结构、语法和逻辑机制。工具PL/SQL另外还增加了用于支持工具（如ORACLE Forms）的句法。
+PL/SQL定义：<pre><code>PL/SQL是 Procedure Language &amp; Structured Query Language 的缩写。ORACLE的SQL是支
+持ANSI(American national Standards Institute)和ISO92    (International    Standards 
+Organization)标准的产品。PL/SQL是对SQL语言存储过程语言的扩展。从ORACLE6以后，ORACLE的
+RDBMS附带了PL/SQL。它现在已经成为一种过程处理语言，简称PL/SQL。目前的PL/SQL包括两部分，
+一部分是数据库引擎部分；另一部分是可嵌入到许多产品（如C语言，JAVA语言等）工具中的独立引擎。
+可以将这两部分称为：数据库PL/SQL和工具PL/SQL。两者的编程非常相似。都具有编程结构、语法和逻
+辑机制。工具PL/SQL另外还增加了用于支持工具（如ORACLE Forms）的句法。
+</code></pre>
+个人理解，就是进行部分逻辑运算、循环处理的函数编程</li>
+</ul>
+<p>针对这个特殊情况设计的的插入语句就是如下：</p>
+<pre><code>declare 
+sum_i int:=0;
+i int:=0;
+begin  
+ loop 
+ i:=i+1;
+ insert into pdb_com_client(client_no,client_type,client_group,client_name,id_code,id_type,address) VALUES('1000001','1','5','test01','320381188304159867','0');
+ exit when i=9999999;
+ end loop;
+ end;
+</code></pre>
+<p>进行插入百万条数据以上处理</p>
+<h3 id="-3"></h3>
+<p>数据处理完，就可以开始进行合并处理</p>
+<ul>
+<li>merge 语法<pre><code>merge into的形式：
+  MERGE INTO [target-table] A USING [source-table sql] B ON([conditional expression] and [...]...)
+   
+  WHEN MATCHED THEN
+   
+  [UPDATE sql]
+   
+  WHEN NOT MATCHED THEN
+   
+  [INSERT sql]
+
 </code></pre>
 </li>
 </ul>
+<p>作用:判断Ｂ表和Ａ表是否满足ON中条件，如果满足则用B表去更新A表，如果不满足，则将B表数据插入A表但是有很多可选项，如下:<br>
+1.正常模式</p>
+<p>2.只update或者只insert</p>
+<p>3.带条件的update或带条件的insert</p>
+<p>4.全插入insert实现</p>
+<p>5.带delete的update(觉得可以用3来实现)</p>
+<pre><code>本例子：
+</code></pre>
+<p>merge into pdb_com_client a USING (select b.client_no,b.id_code from pdb_com_client_tmp b) c</p>
+<p>ON(a.id_code=c.id_code)</p>
+<p>when matched then</p>
+<p>update SET a.client_no=c.client_no;</p>
+<p>commit;</p>
+<pre><code>
+
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -194,6 +246,7 @@ PL/SQL定义：<pre><code>PL/SQL是 Procedure Language &amp; Structured Query La
 <ul>
 <li>
 <ul>
+<li></li>
 <li></li>
 <li></li>
 </ul>
